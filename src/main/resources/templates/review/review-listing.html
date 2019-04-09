@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/template_head::head">
+
+</head>
+
+<body>
+
+<header th:replace="common/template_menu::header">
+
+</header>
+<div th:replace="common/template_menu::header-services">
+
+</div>
+	<!-- Page Content -->
+	<section class="blog-w3ls">
+
+		<div class="container">
+			<!-- Page Heading/Breadcrumbs -->
+			<div class="row">
+				<div class="col-lg-12">
+					<hr>
+					<ol class="breadcrumb">
+						<li><a th:href="@{/}">主页</a>
+						</li>
+						<li class="active">所有书评</li>
+					</ol>
+				</div>
+			</div>
+			<!-- /.row -->
+			<div class="row">
+				<!-- Blog Entries Column -->
+				<div class="col-md-8">
+					<hr>
+					<!-- First Blog Post -->
+					<div th:each="bookreview : ${bookReviewList} ">
+						<h3><a th:href="@{/review-detail(reviewId=${bookreview.reviewId})}" th:text="${bookreview.title}">Lorem Ipsum Dolor</a></h3>
+						<p class="lead">作者：<a href="#" th:text="${bookreview.user.getName()}">Vanity Fair</a></p>
+						<p class="blog-agile1" ><i class="fa fa-clock-o"></i> 发布于<p th:text="${bookreview.date}">2018-03-15 18:00:00</p></p>
+						<hr>
+						<p class="blog-agile2" th:text="${bookreview.text.length()<100?bookreview.text.substring(0,bookreview.text.length()):bookreview.text.substring(0,100)}+'......'">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora,
+							necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis
+							ipsum officiis rerum.</p>
+						<a class="btn btn-primary" th:href="@{/review-detail(reviewId=${bookreview.reviewId})}">阅读更多 <i class="fa fa-angle-right"></i></a>
+						<hr>
+
+					</div>
+					<div class="ps-pagination">
+						<ul class="pagination">
+							<div th:each="pagenum,itemStat: ${pagenum}" th:if="${currentPage} eq ${itemStat.count} ">
+								<li><a th:if=" ${currentPage} ne '1'" th:href="@{/review-listing(currentPage=${currentPage-1})}">
+									<i class="fa fa-angle-left">
+									</i>
+								</a>
+								</li>
+								<li ><a th:if="${currentPage} ne '1'" th:href="@{/review-listing(currentPage=${currentPage-1})}" th:text="${currentPage-1}">i-1</a></li>
+								<li class="active"><a th:href="@{/review-listing(currentPage=${currentPage})}" th:text="${currentPage}"></a></li>
+								<li th:if=" ${currentPage * 8} lt ${countnum}"><a th:href="@{/review-listing(currentPage=${currentPage-(-1)})}" th:text="${(currentPage-(-1))}"></a></li>
+								<li th:if="${(currentPage-(-1)) * 8} lt ${countnum}" ><a  th:href="@{/review-listing(currentPage=${currentPage-(-2)}}" th:text="${currentPage-(-2)}"></a></li>
+								<li><a th:if=" ${currentPage} ne ${pageNum}" th:href="@{/review-listing(currentPage=${currentPage-(-1)})}">
+									<i class="fa fa-angle-right">
+									</i>
+								</a>
+								</li>
+							</div>
+
+						</ul>
+					</div>
+
+				</div>
+				<!-- Blog Sidebar Widgets Column -->
+				<div class="col-md-4">
+					<section class="blogwell-w3ls">
+						<!-- Blog Search Well -->
+						<div class="well">
+							<h4>搜索书评</h4>
+							<form  th:action="@{/review-search}" th:method="post">
+								<div class="input-group">
+									<input type="text" class="form-control" name="keyword" size="14" th:value="${keyword}"placeholder="搜索" required />
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="submit" value="search"><i class="fa fa-search"></i></button>
+									</span>
+								</div>
+							</form>
+							<!-- /.input-group -->
+						</div>
+					</section>
+				</div>
+			</div>
+			<!-- /.row -->
+			<hr>
+		</div>
+		<!-- /.container -->
+	</section>
+
+<footer th:replace="common/template_menu::footer">
+
+</footer>
+
+<!-- JS Library-->
+<script type="text/javascript" src="plugins/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="plugins/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+<script type="text/javascript" src="plugins/owl-carousel/owl.carousel.min.js"></script>
+<script type="text/javascript" src="plugins/gmap3.min.js"></script>
+<script type="text/javascript" src="plugins/imagesloaded.pkgd.js"></script>
+<script type="text/javascript" src="plugins/isotope.pkgd.min.js"></script>
+<script type="text/javascript" src="plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="plugins/jquery.matchHeight-min.js"></script>
+<script type="text/javascript" src="plugins/slick/slick/slick.min.js"></script>
+<script type="text/javascript" src="plugins/elevatezoom/jquery.elevatezoom.js"></script>
+<script type="text/javascript" src="plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script>
+<script type="text/javascript" src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ditu.google.cn/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB"></script>
+<script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.video.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+<!-- Custom scripts-->
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

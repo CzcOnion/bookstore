@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.csu.bookstore.persistence.CollectionMapper" >
+  <resultMap id="BaseResultMap" type="org.csu.bookstore.domain.Collection" >
+    <id column="user_id" property="userId" jdbcType="DECIMAL" />
+    <id column="book_id" property="bookId" jdbcType="DECIMAL" />
+    <result column="date" property="date" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, book_id, date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.csu.bookstore.domain.CollectionKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from collection
+    where user_id = #{userId,jdbcType=DECIMAL}
+      and book_id = #{bookId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="org.csu.bookstore.domain.CollectionKey" >
+    delete from collection
+    where user_id = #{userId,jdbcType=DECIMAL}
+      and book_id = #{bookId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="org.csu.bookstore.domain.Collection" >
+    insert into collection (user_id, book_id, date
+      )
+    values (#{userId,jdbcType=DECIMAL}, #{bookId,jdbcType=DECIMAL}, #{date}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.csu.bookstore.domain.Collection" >
+    insert into collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.csu.bookstore.domain.Collection" >
+    update collection
+    <set >
+      <if test="date != null" >
+        date = #{date,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=DECIMAL}
+      and book_id = #{bookId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.csu.bookstore.domain.Collection" >
+    update collection
+    set date = #{date,jdbcType=DECIMAL}
+    where user_id = #{userId,jdbcType=DECIMAL}
+      and book_id = #{bookId,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="getNextId" resultType="int">
+    select
+    max(collection_id)+1
+    from
+    collection
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from collection
+    where user_id = #{userId,jdbcType=DECIMAL}
+  </select>
+</mapper>

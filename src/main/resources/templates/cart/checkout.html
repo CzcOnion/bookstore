@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/template_head::head">
+
+</head>
+
+<body>
+
+<header th:replace="common/template_menu::header">
+
+</header>
+<div th:replace="common/template_menu::header-services">
+
+</div>
+		<!-- SITE MAIN CONTENT -->
+		<main id="main-content" class="ps-main" role="main">
+
+			<div class="container">
+				<div class="row">
+
+					<div class="m-t-b clearfix">
+						<!-- SIDEBAR -->
+						<aside class="col-xs-12 col-sm-4 col-md-3">
+							<section class="side-section">
+								<h3 class="uppercase text-bold"><span class="text-xs">为你推荐</span></h3>
+							<!--	
+								<ul class="nav nav-tabs nav-stacked">
+									<li><a href="index-3.html">Homepage</a></li>															
+									<li><a href="about-us.html">About us</a></li>															
+									<li><a href="products-2.html">Shop</a></li>															
+									<li><a href="product-2.html">Single Product Details</a></li>															
+									<li><a href="contact-us-2.html">Contact us</a></li>															
+								</ul>
+							-->
+							</section>
+								
+							<!-- PROMO -->
+							<div class="promo inverse-background" style="background: url('images/book_image/BEAMS0.jpg') no-repeat; background-size: auto 100%;">
+								<div class="inner text-center np">
+									<div class="ribbon">
+										<h6 class="nmb"></h6>
+										<h5 class="text-semibold uppercase nmb">热销图书</h5>
+										<div class="space10"></div>
+										<a href="products.html" class="with-icon prepend-icon"><i class="iconfont-caret-right"></i><span> 立即购买</span></a>
+									</div>
+								</div>
+							</div>
+                            <div class="promo inverse-background" style="background: url('images/book_image/19840.jpg') no-repeat; background-size: auto 100%;">
+								<div class="inner text-center np">
+									<div class="ribbon">
+										<h6 class="nmb">New Arrivals</h6>
+										<h5 class="text-semibold uppercase nmb">热销图书</h5>
+										<div class="space10"></div>
+										<a href="products.html" class="with-icon prepend-icon"><i class="iconfont-caret-right"></i><span> 立即购买</span></a>
+									</div>
+								</div>
+							</div>
+							<!-- // PROMO -->
+						</aside>
+						<!-- // SIDEBAR -->
+						
+						<section class="col-xs-12 col-sm-8 col-md-9">
+							<form class="form-horizontal" role="form" th:action="@{/newOrder}" th:method="post">
+							<div class="panel-group checkout" id="checkout-collapse">
+
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#checkout-collapse" href="#checkout-collapse1">
+													<span class="step">01</span>
+													收货地址
+												</a>
+											</h4>
+										</div>
+										<div id="checkout-collapse1" class="panel-collapse collapse in">
+											<div class="panel-body">
+
+												<div class="row">
+													<div class="col-xs-12 col-sm-12 col-md-6">
+														<table class="demoTable">
+															<thead>
+															<tr>
+																<th class="td-06">
+																	<h3>请输入收货地址：</h3>
+																</th>
+															</tr>
+															</thead>
+															<tbody>
+															<tr>
+																<td class="td-06">
+																	<!--zcityGroup start-->
+																	<div class="zcityGroup" city-range="{'level_start':1,'level_end':3}" city-ini="湖南,长沙市,天心区"></div>
+																	<!--zcityGroup end-->
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<input type="text" name="zcity">
+																</td>
+															</tr>
+															</tbody>
+														</table>
+
+
+													</div>
+
+												</div>
+												<div class="space20 clearfix">
+													<a class="btn btn-primary" data-toggle="collapse" data-parent="#checkout-collapse" href="#checkout-collapse2">继续</a>
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#checkout-collapse" href="#checkout-collapse2">
+													<span class="step">02</span>
+													支付方式
+												</a>
+											</h4>
+										</div>
+										<div id="checkout-collapse2" class="panel-collapse collapse">
+											<div class="panel-body">
+
+												<div class="form-group stylish-input">
+													<input type="radio" id="deliverymethod1" class="prettyCheckable" name="deliverymethod" data-label="Method 1" />
+													<p></p>
+												</div>
+												<div class="space20 clearfix"></div>
+												<a class="btn btn-primary" data-toggle="collapse" data-parent="#checkout-collapse" href="#checkout-collapse3">继续</a>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#checkout-collapse" href="#checkout-collapse3">
+													<span class="step">03</span>
+													支付详情
+												</a>
+											</h4>
+										</div>
+										<div id="checkout-collapse3" class="panel-collapse collapse">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-xs-12 col-sm-6 pull-right center-sm">
+														<table class="shop-summary">
+															<tr>
+																<th>总价:</th>
+																<td th:text="${session.totalCost}">$100.00</td>
+															</tr>
+															<tr>
+																<th>折扣 (0%)</th>
+																<td>0.00</td>
+															</tr>
+
+															<tr class="total">
+																<th>实付:</th>
+																<td th:text="${session.totalCost}"> $90.00</td>
+															</tr>
+															<tr>
+																<th><button class="btn btn-primary" onclick="submit">结算</button></th>
+																<td><a href="#" class="btn btn-primary  uppercase">继续购物</a></td>
+															</tr>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+							</div>
+							</form>
+						</section>
+						
+					</div>
+				
+				</div>
+			</div>
+
+
+
+
+		</main>
+
+<footer th:replace="common/template_menu::footer">
+
+</footer>
+	<!-- // SITE FOOTER -->
+<script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>');</script>
+<script src="js/modernizr.min.js"></script>
+<!-- Essential Javascripts -->
+<script src="js/minified.js"></script>
+<!-- // Essential Javascripts -->
+<script type="text/javascript" src="js/zcity.js"></script>
+
+<script type="text/javascript">
+	zcityrun('.zcityGroup');
+</script>
+
+	<!-- Particular Page Javascripts -->
+	<script src="js/products.js"></script>
+	<!-- // Particular Page Javascripts -->
+	
+</body>
+</html>

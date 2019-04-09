@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.csu.bookstore.persistence.OrderMapper" >
+  <resultMap id="BaseResultMap" type="org.csu.bookstore.domain.Order" >
+    <id column="order_id" property="orderId" jdbcType="DECIMAL" />
+    <result column="user_id" property="userId" jdbcType="DECIMAL" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="carriage" property="carriage" jdbcType="REAL" />
+    <result column="total_cost" property="totalCost" jdbcType="REAL" />
+    <result column="recipient_name" property="recipientName" jdbcType="VARCHAR" />
+    <result column="recipient_phone" property="recipientPhone" jdbcType="VARCHAR" />
+    <result column="zip" property="zip" jdbcType="CHAR" />
+    <result column="recipient_address" property="recipientAddress" jdbcType="VARCHAR" />
+    <result column="is_paid" property="isPaid" jdbcType="DECIMAL" />
+    <result column="paid_time" property="paidTime" jdbcType="DATE" />
+    <result column="is_sent" property="isSent" jdbcType="DECIMAL" />
+    <result column="sent_time" property="sentTime" jdbcType="DATE" />
+    <result column="is_recived" property="isRecived" jdbcType="DECIMAL" />
+    <result column="recived_time" property="recivedTime" jdbcType="DATE" />
+    <result column="is_done" property="isDone" jdbcType="DECIMAL" />
+    <result column="done_time" property="doneTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, user_id, date, carriage, total_cost, recipient_name, recipient_phone, zip, 
+    recipient_address, is_paid, paid_time, is_sent, sent_time, is_recived, recived_time, 
+    is_done, done_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where order_id = #{orderId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orders
+    where order_id = #{orderId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="org.csu.bookstore.domain.Order" >
+    insert into orders (order_id, user_id, date, 
+      carriage, total_cost, recipient_name, 
+      recipient_phone, zip, recipient_address, 
+      is_paid, paid_time, is_sent, 
+      sent_time, is_recived, recived_time, 
+      is_done, done_time)
+    values (#{orderId,jdbcType=DECIMAL}, #{userId,jdbcType=DECIMAL}, #{date,jdbcType=DATE}, 
+      #{carriage,jdbcType=REAL}, #{totalCost,jdbcType=REAL}, #{recipientName,jdbcType=VARCHAR}, 
+      #{recipientPhone,jdbcType=VARCHAR}, #{zip,jdbcType=CHAR}, #{recipientAddress,jdbcType=VARCHAR}, 
+      #{isPaid,jdbcType=DECIMAL}, #{paidTime,jdbcType=DATE}, #{isSent,jdbcType=DECIMAL}, 
+      #{sentTime,jdbcType=DATE}, #{isRecived,jdbcType=DECIMAL}, #{recivedTime,jdbcType=DATE}, 
+      #{isDone,jdbcType=DECIMAL}, #{doneTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="org.csu.bookstore.domain.Order" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="carriage != null" >
+        carriage,
+      </if>
+      <if test="totalCost != null" >
+        total_cost,
+      </if>
+      <if test="recipientName != null" >
+        recipient_name,
+      </if>
+      <if test="recipientPhone != null" >
+        recipient_phone,
+      </if>
+      <if test="zip != null" >
+        zip,
+      </if>
+      <if test="recipientAddress != null" >
+        recipient_address,
+      </if>
+      <if test="isPaid != null" >
+        is_paid,
+      </if>
+      <if test="paidTime != null" >
+        paid_time,
+      </if>
+      <if test="isSent != null" >
+        is_sent,
+      </if>
+      <if test="sentTime != null" >
+        sent_time,
+      </if>
+      <if test="isRecived != null" >
+        is_recived,
+      </if>
+      <if test="recivedTime != null" >
+        recived_time,
+      </if>
+      <if test="isDone != null" >
+        is_done,
+      </if>
+      <if test="doneTime != null" >
+        done_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="carriage != null" >
+        #{carriage,jdbcType=REAL},
+      </if>
+      <if test="totalCost != null" >
+        #{totalCost,jdbcType=REAL},
+      </if>
+      <if test="recipientName != null" >
+        #{recipientName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientPhone != null" >
+        #{recipientPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        #{zip,jdbcType=CHAR},
+      </if>
+      <if test="recipientAddress != null" >
+        #{recipientAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isPaid != null" >
+        #{isPaid,jdbcType=DECIMAL},
+      </if>
+      <if test="paidTime != null" >
+        #{paidTime,jdbcType=DATE},
+      </if>
+      <if test="isSent != null" >
+        #{isSent,jdbcType=DECIMAL},
+      </if>
+      <if test="sentTime != null" >
+        #{sentTime,jdbcType=DATE},
+      </if>
+      <if test="isRecived != null" >
+        #{isRecived,jdbcType=DECIMAL},
+      </if>
+      <if test="recivedTime != null" >
+        #{recivedTime,jdbcType=DATE},
+      </if>
+      <if test="isDone != null" >
+        #{isDone,jdbcType=DECIMAL},
+      </if>
+      <if test="doneTime != null" >
+        #{doneTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.csu.bookstore.domain.Order" >
+    update orders
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="carriage != null" >
+        carriage = #{carriage,jdbcType=REAL},
+      </if>
+      <if test="totalCost != null" >
+        total_cost = #{totalCost,jdbcType=REAL},
+      </if>
+      <if test="recipientName != null" >
+        recipient_name = #{recipientName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientPhone != null" >
+        recipient_phone = #{recipientPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        zip = #{zip,jdbcType=CHAR},
+      </if>
+      <if test="recipientAddress != null" >
+        recipient_address = #{recipientAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isPaid != null" >
+        is_paid = #{isPaid,jdbcType=DECIMAL},
+      </if>
+      <if test="paidTime != null" >
+        paid_time = #{paidTime,jdbcType=DATE},
+      </if>
+      <if test="isSent != null" >
+        is_sent = #{isSent,jdbcType=DECIMAL},
+      </if>
+      <if test="sentTime != null" >
+        sent_time = #{sentTime,jdbcType=DATE},
+      </if>
+      <if test="isRecived != null" >
+        is_recived = #{isRecived,jdbcType=DECIMAL},
+      </if>
+      <if test="recivedTime != null" >
+        recived_time = #{recivedTime,jdbcType=DATE},
+      </if>
+      <if test="isDone != null" >
+        is_done = #{isDone,jdbcType=DECIMAL},
+      </if>
+      <if test="doneTime != null" >
+        done_time = #{doneTime,jdbcType=DATE},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.csu.bookstore.domain.Order" >
+    update orders
+    set user_id = #{userId,jdbcType=DECIMAL},
+      date = #{date,jdbcType=DATE},
+      carriage = #{carriage,jdbcType=REAL},
+      total_cost = #{totalCost,jdbcType=REAL},
+      recipient_name = #{recipientName,jdbcType=VARCHAR},
+      recipient_phone = #{recipientPhone,jdbcType=VARCHAR},
+      zip = #{zip,jdbcType=CHAR},
+      recipient_address = #{recipientAddress,jdbcType=VARCHAR},
+      is_paid = #{isPaid,jdbcType=DECIMAL},
+      paid_time = #{paidTime,jdbcType=DATE},
+      is_sent = #{isSent,jdbcType=DECIMAL},
+      sent_time = #{sentTime,jdbcType=DATE},
+      is_recived = #{isRecived,jdbcType=DECIMAL},
+      recived_time = #{recivedTime,jdbcType=DATE},
+      is_done = #{isDone,jdbcType=DECIMAL},
+      done_time = #{doneTime,jdbcType=DATE}
+    where order_id = #{orderId,jdbcType=DECIMAL}
+  </update>
+
+  <select id="getNextId" resultType="int">
+    select
+    max(order_id)+1
+    from
+    orders
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from orders
+    where user_Id = #{userId,jdbcType=DECIMAL}
+  </select>
+</mapper>

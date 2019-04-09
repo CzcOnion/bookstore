@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.csu.bookstore.persistence.MessageReplyMapper" >
+  <resultMap id="BaseResultMap" type="org.csu.bookstore.domain.MessageReply" >
+    <id column="mreply_id" property="mreplyId" jdbcType="DECIMAL" />
+    <result column="message_id" property="messageId" jdbcType="DECIMAL" />
+    <result column="user_id" property="userId" jdbcType="DECIMAL" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mreply_id, message_id, user_id, date, text
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from message_reply
+    where mreply_id = #{mreplyId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from message_reply
+    where mreply_id = #{mreplyId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="org.csu.bookstore.domain.MessageReply" >
+    insert into message_reply (mreply_id, message_id, user_id, 
+      date, text)
+    values (#{mreplyId,jdbcType=DECIMAL}, #{messageId,jdbcType=DECIMAL}, #{userId,jdbcType=DECIMAL}, 
+      #{date,jdbcType=DATE}, #{text,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.csu.bookstore.domain.MessageReply" >
+    insert into message_reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mreplyId != null" >
+        mreply_id,
+      </if>
+      <if test="messageId != null" >
+        message_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mreplyId != null" >
+        #{mreplyId,jdbcType=DECIMAL},
+      </if>
+      <if test="messageId != null" >
+        #{messageId,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.csu.bookstore.domain.MessageReply" >
+    update message_reply
+    <set >
+      <if test="messageId != null" >
+        message_id = #{messageId,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="text != null" >
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mreply_id = #{mreplyId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.csu.bookstore.domain.MessageReply" >
+    update message_reply
+    set message_id = #{messageId,jdbcType=DECIMAL},
+      user_id = #{userId,jdbcType=DECIMAL},
+      date = #{date,jdbcType=DATE},
+      text = #{text,jdbcType=VARCHAR}
+    where mreply_id = #{mreplyId,jdbcType=DECIMAL}
+  </update>
+  <select id="getNextId" resultType="int">
+    select
+    max(reply_id)+1
+    from
+    message_reply
+  </select>
+
+  <select id="selectByMessageId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from message_reply
+    where message_id = #{messageId,jdbcType=DECIMAL}
+  </select>
+
+  <delete id="deleteByMessageId" parameterType="java.lang.Integer" >
+    delete from message_reply
+    where message_id = #{messageId,jdbcType=DECIMAL}
+  </delete>
+</mapper>

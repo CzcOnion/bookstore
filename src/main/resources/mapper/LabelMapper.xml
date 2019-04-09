@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.csu.bookstore.persistence.LabelMapper" >
+  <resultMap id="BaseResultMap" type="org.csu.bookstore.domain.Label" >
+    <id column="label_id" property="labelId" jdbcType="DECIMAL" />
+    <result column="label_name" property="labelName" jdbcType="VARCHAR" />
+    <result column="book_id" property="bookId" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    label_id, label_name, book_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from label
+    where label_id = #{labelId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from label
+    where label_id = #{labelId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="org.csu.bookstore.domain.Label" >
+    insert into label (label_id, label_name, book_id
+      )
+    values (#{labelId,jdbcType=DECIMAL}, #{labelName,jdbcType=VARCHAR}, #{bookId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.csu.bookstore.domain.Label" >
+    insert into label
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="labelId != null" >
+        label_id,
+      </if>
+      <if test="labelName != null" >
+        label_name,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="labelId != null" >
+        #{labelId,jdbcType=DECIMAL},
+      </if>
+      <if test="labelName != null" >
+        #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.csu.bookstore.domain.Label" >
+    update label
+    <set >
+      <if test="labelName != null" >
+        label_name = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where label_id = #{labelId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.csu.bookstore.domain.Label" >
+    update label
+    set label_name = #{labelName,jdbcType=VARCHAR},
+      book_id = #{bookId,jdbcType=DECIMAL}
+    where label_id = #{labelId,jdbcType=DECIMAL}
+  </update>
+
+  <select id="getNextId" resultType="int">
+    select
+    max(label_id)+1
+    from
+    label
+  </select>
+</mapper>

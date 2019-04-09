@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<header  class="header" th:fragment="header">
+    <nav class="navigation">
+        <div class="container-fluid">
+            <div class="navigation__column left">
+                <div class="header__logo"><a class="ps-logo" th:href="@{/}"><img src="images/logo.png" alt=""></a></div>
+            </div>
+            <div class="navigation__column center">
+                <ul class="main-menu menu">
+                    <li class="menu-item menu-item-has-children dropdown">
+                        <a th:href="@{/}">主页</a>
+                    </li>
+                    <!--展开有多层目录-->
+                    <li class="menu-item menu-item-has-children has-mega-menu"><a th:href="'product-listing?'+itemId+'='+1000000+'&'+currentPage+'=1'">书城</a>
+                        <div class="mega-menu">
+                            <div class="mega-wrap">
+
+                                <div class="mega-column">
+                                    <h4 class="mega-heading">文学</h4>
+                                    <ul class="mega-item" th:each="itemlist,itemlistStat: ${itemList}">
+                                        <li  th:if="${itemlist.itemId} le '1000010' "><a th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-column">
+                                    <h4 class="mega-heading">流行</h4>
+                                    <ul class="mega-item" th:each="itemlist,itemlistStat: ${itemList}">
+                                        <li  th:if="${itemlist.itemId} ge '1000027'"><a  th:if="${itemlist.itemId} le '1000037' " th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-column">
+                                    <h4 class="mega-heading">文化</h4>
+                                    <ul class="mega-item" th:each="itemlist,itemlistStat: ${itemList}">
+                                        <li  th:if="(${itemlist.itemId} ge '1000063')"><a th:if="(${itemlist.itemId} le '1000073')" th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-column">
+                                    <h4 class="mega-heading">生活</h4>
+                                    <ul class="mega-item" th:each="itemlist,itemlistStat: ${itemList}">
+                                        <li  th:if="(${itemlist.itemId} ge '1000096')"><a th:if="(${itemlist.itemId} le '1000106')" th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-column">
+                                    <h4 class="mega-heading">经管</h4>
+                                    <ul class="mega-item" th:each="itemlist,itemlistStat: ${itemList}">
+                                        <li  th:if="(${itemlist.itemId} ge '1000117')"><a th:if="(${itemlist.itemId} le '1000127') " th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mega-column">
+                                    <h4 class="mega-heading">科技</h4>
+                                    <ul class="mega-item" th:each="itemlist,itemlistStat: ${itemList}">
+                                        <li  th:if="(${itemlist.itemId} ge '1000130')"><a th:if="(${itemlist.itemId} le '1000140') " th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="menu-item"><a th:href="@{/review-listing(currentPage=${1})}">书评</a></li>
+                    <li th:if="${session.user} eq null" class="menu-item"><a href="javascript:void(0)" onClick="showBox()">登录/注册</a></li>
+                    <!--<li th:if="${user.getName()} ne null" class="menu-item"><a href="javascript:void(0)" onClick="" th:text="'欢迎'+${user.getName()}"></a></li>-->
+                    <li th:if="${session.user} ne null" class="menu-item menu-item-has-children dropdown"><a th:href="@{/personal(userId=${user.getUserId()})}">个人主页</a>
+                        <ul class="sub-menu">
+                            <li class="menu-item"><a th:href="@{/logoff}">退出登录</a></li>
+                        </ul>
+                    </li>
+                    <!-- 登录注册隐藏框 -->
+
+                    <!--
+                                                <li class="menu-item menu-item-has-children dropdown"><a href="#">登录/注册</a>
+                                                            <ul class="sub-menu">
+                                                                <li class="menu-item"><a href="#">登录</a></li>
+                                                                <li class="menu-item"><a href="#">注册</a></li>
+                                                            </ul>
+                                                </li>
+                    -->
+                </ul>
+            </div>
+            <div class="navigation__column right">
+                <form class="ps-search--header" th:action="@{/searchBook}" th:method="post">
+                    <input class="form-control" type="text" placeholder="Search Product…" name="text" >
+                    <button type="submit"><i class="ps-icon-search"></i></button>
+                </form>
+                <div class="ps-cart"><a class="ps-cart__toggle" href="#">
+                    <!-- <span><i>20</i></span> -->
+                    <i class="ps-icon-shopping-cart"></i></a>
+                    <div class="ps-cart__listing">
+                        <div class="ps-cart__content">
+                            <th:block th:each="cart:${cart}" >
+                            <div class="ps-cart-item" >
+                                <!-- <a class="ps-cart-item__close" href="#"></a> -->
+                                <div class="ps-cart-item__thumbnail">
+                                    <a th:href="@{/product-detail}"></a><img th:src="${cart.getBook().getImageList().get(0).getImageLink()}" alt=""></div>
+                                <div class="ps-cart-item__content">
+                                    <a class="ps-cart-item__title" th:href="@{/product-detail}" th:text="${cart.getBook().getName()}">Amazin’ Glazin’</a>
+                                    <p><span >数量:<i th:text="${cart.count}">12</i></span><span>总价:<i th:text="${'¥'+cart.count*cart.getBook().getPrice()}">£176</i></span></p>
+                                </div>
+                            </div>
+                            </th:block>
+                        </div>
+                        <div class="ps-cart__footer"><a class="ps-btn"  th:href="@{cart}">进入购物车<i class="ps-icon-arrow-left"></i></a></div>
+                    </div>
+                </div>
+                <div class="menu-toggle"><span></span></div>
+            </div>
+        </div>
+    </nav>
+    <div class="event" id="login_box" style="display: none;">
+        <div class="login">
+            <div class="title">
+                <span class="t_txt">登录</span>
+                <span class="del" onClick="deleteLogin()">X</span>
+            </div>
+            <div class="loginForm" >
+                <!--<form th:action="@{/login}" method="post"  th:object="${user}">-->
+                    <!--<input type="text"  placeholder="请输入用户名"   name="userId"  th:field="*{userId}"/>-->
+                    <!--<input type="password"  placeholder="请输入密码" name="password" th:field="*{password}"/>-->
+                    <!--<label id="msg" th:text="${msg}">错误</label>-->
+                    <!--&lt;!&ndash;<input type="text" name="" id="" value="" placeholder="请输入验证码"/>&ndash;&gt;-->
+                    <!--<input type="submit" name="" id="" value="登  录" class="btn"/>-->
+                    <!--<label onclick="showRegister()" >没有账号？现在注册</label>-->
+                <!--</form>-->
+                <form onsubmit="return false" id="login">
+                    <input type="text"  placeholder="请输入用户名"   name="userId"  />
+                    <input type="password"  placeholder="请输入密码" name="password" />
+                    <label id="msg" th:text="${msg}">错误</label>
+                    <!--<input type="text" name="" id="" value="" placeholder="请输入验证码"/>-->
+                    <input type="submit" name="" id="" value="登  录" class="btn"/>
+                    <label onclick="showRegister()" >没有账号？现在注册</label>
+                </form>
+            </div>
+
+            <script type="text/javascript" src="js/jquery.min.js"></script>
+
+            <script>
+                $("#login").submit(function () {
+                    $.ajax({
+                        url:"http://localhost:8080/login",
+                        type:"post",
+                        data:$("#login").serialize(),
+                        success:function(result){
+                            if(result){
+                                alert("登录成功");
+                                window.location.href="http://localhost:8080";
+                                console.log(result);
+                            }else{
+                                alert("用户名或密码错误");
+                                return false;
+                            }
+
+                        },
+                        error:function(result){
+                            alert("error");
+                            console.log(result);
+                        }
+                    })
+                });
+            </script>
+
+        </div>
+    </div>
+    <div class="bg_color" onClick="deleteLogin()" id="bg_filter" style="display: none;"></div>
+
+    <div class="contact" id="register_box" style="display: none;">
+        <div class="register">
+            <div class="title">
+                <span class="t_txt">注册</span>
+                <span class="del" onClick="deleteRegister()">X</span>
+                <span class="required_notification">* 表示必填项</span>
+            </div>
+            <div class="registerForm">
+                <form  th:action="@{/signIn}" th:object="${user}" th:method="post" name="contact_form">
+                    <ul>
+                        <li>
+                            <label >姓名:</label>
+                            <input type="text" th:field="*{name}" placeholder="张三" required />
+                        </li>
+                        <li>
+                            <label  >性别:</label>
+                            <input type="radio" th:field="*{gender}" value="1">男
+                            <input type="radio" th:field="*{gender}" value="0" />女
+                        </li>
+                        <li>
+                            <label >密码:</label>
+                            <input type="password" th:field="*{password}" placeholder="******" required />
+                            <span class="form_hint">正确格式为：6~18个字符，可使用字母、数字、下划线，需以字母开头</span>
+                        </li>
+                        <li>
+                            <label>电子邮件:</label>
+                            <input type="email" name="email" th:field="*{email}" placeholder="sayingforever@163.com" required />
+                            <span class="form_hint">正确格式为：sayingforever@163.com</span>
+                        </li>
+                        <li>
+                            <label >电话:</label>
+                            <input type="text" th:field="*{phone}" placeholder="123456" required />
+                        </li>
+                        <li>
+                            <button class="btn" type="submit" onclick="deleteRegister()">注册</button>
+                            <span class="exchange" onclick="deleteRegister()">已有账号？去登录</span>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<div class="header-services" th:fragment="header-services">
+    <div class="ps-services owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="7000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
+        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>荐   书</strong>:  欢 迎 光 临</p>
+        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>荐   书</strong>:  欢 迎 光 临</p>
+        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>荐   书</strong>:  欢 迎 光 临</p>
+    </div>
+</div>
+
+<footer th:fragment="footer" class="ps-footer bg--cover" data-background="/images/background/parallax.jpg">
+    <div class="ps-footer__copyright">
+        <div class="ps-container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <p>Copyright &copy; 2018.Company name All rights reserved.   &nbsp;&nbsp;
+                        <a href="http://www.cssmoban.com/" target="_blank" >  联系我们  i++ </a> </p>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <ul class="ps-social">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

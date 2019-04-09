@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<!--[if IE 7]><html class="ie ie7"><![endif]-->
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head th:replace="common/template_head::head">
+
+</head>
+<!--[if IE 7]><body class="ie7 lt-ie8 lt-ie9 lt-ie10"><![endif]-->
+<!--[if IE 8]><body class="ie8 lt-ie9 lt-ie10"><![endif]-->
+<!--[if IE 9]><body class="ie9 lt-ie10"><![endif]-->
+<body class="ps-loading">
+<div class="header--sidebar"></div>
+<header th:replace="common/template_menu::header"></header>
+<div th:replace="common/template_menu::header-services">
+
+</div>
+<main class="ps-main">
+	<div class="ps-products-wrap pt-80 pb-80">
+		<div class="ps-products" data-mh="product-listing">
+			<div class="ps-product-action">
+				<!--<div class="ps-product__filter">-->
+					<!--<select class="ps-select selectpicker">-->
+						<!--<option value="1">Shortby</option>-->
+						<!--<option value="2">Name</option>-->
+						<!--<option value="3">Price (Low to High)</option>-->
+						<!--<option value="3">Price (High to Low)</option>-->
+					<!--</select>-->
+				<!--</div>-->
+
+				<div class="ps-pagination">
+					<ul class="pagination">
+						<div th:each="pagenum,itemStat: ${pagenum}" th:if="${currentPage} eq ${itemStat.count} ">
+							<li><a th:if=" ${currentPage} ne '1'" th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-1}">
+								<i class="fa fa-angle-left">
+								</i>
+							</a>
+							</li>
+							<li ><a th:if="${currentPage} ne '1'" th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-1}" th:text="${currentPage-1}">i-1</a></li>
+							<li class="active"><a th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage}" th:text="${currentPage}"></a></li>
+							<li th:if=" ${currentPage }*8 lt ${countnum}"><a th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-(-1)}" th:text="${(currentPage-(-1))}"></a></li>
+							<li th:if="${(currentPage-(-1)) * 8} lt ${countnum}" ><a  th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-(-2)}" th:text="${currentPage-(-2)}"></a></li>
+							<li><a th:if=" ${currentPage} ne ${pageNum}" th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-(-1)}">
+								<i class="fa fa-angle-right">
+								</i>
+							</a>
+							</li>
+						</div>
+
+					</ul>
+				</div>
+
+			</div>
+			<div class="ps-product__columns">
+				<tr th:each="book ,bookStat : ${bookList}" >
+					<div class="ps-product__column">
+						<div class="ps-shoe mb-30">
+							<a th:each="image,imageStat : ${book.imageList}">
+							<div class="ps-shoe__thumbnail">
+								<a class="ps-shoe__favorite" href="#"  th:if="${imageStat.count} eq '1'"><i class="ps-icon-heart" ></i></a>
+								<img th:if="${imageStat.count} eq '1'"  th:src="@{${image.imageLink}}" th:href="'/product-detail?'+bookName+'='+${book.name}" alt="">
+								<a class="ps-shoe__overlay" th:href="'/product-detail?'+bookName+'='+${book.name}"></a>
+							</div>
+							<div class="ps-shoe__content">
+								<div class="ps-shoe__variants">
+									<div class="ps-shoe__variant normal">
+										<a th:each="imagex,imagexStat : ${book.imageList}">
+										<img th:src="@{${imagex.imageLink}}" alt="">
+										</a>
+									</div>
+									<select class="ps-rating ps-shoe__rating">
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+										<option value="1">4</option>
+										<option value="2">5</option>
+									</select>
+								</div>
+								<div class="ps-shoe__detail"><a class="ps-shoe__name"th:href="'/product-detail?'+bookName+'='+${book.name}" th:text="${book.name}">Air Jordan 7 Retro</a>
+									<p class="ps-shoe__categories"><a th:each="classify,classifyStat : ${book.classifyList}"><a  th:href="'product-listing?'+itemId+'='+${classify.itemId}+'&'+currentPage+'=1'" th:text="${classify.itemName}+'  '">Men shoes</a></a></p><span class="ps-shoe__price" th:text="${book.price}"> £ 120</span>
+								</div>
+							</div>
+							</a>
+						</div>
+					</div>
+				</tr>
+			</div>
+			<div class="ps-product-action">
+				<!--<div class="ps-product__filter">-->
+					<!--<select class="ps-select selectpicker">-->
+						<!--<option value="1">Shortby</option>-->
+						<!--<option value="2">Name</option>-->
+						<!--<option value="3">Price (Low to High)</option>-->
+						<!--<option value="3">Price (High to Low)</option>-->
+					<!--</select>-->
+				<!--</div>-->
+				<div class="ps-pagination">
+					<ul class="pagination">
+						<div th:each="pagenum,itemStat: ${pagenum}" th:if="${currentPage} eq ${itemStat.count} ">
+							<li><a th:if=" ${currentPage} ne '1'" th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-1}">
+								<i class="fa fa-angle-left">
+								</i>
+							</a>
+							</li>
+							<li ><a th:if="${currentPage} ne '1'" th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-1}" th:text="${currentPage-1}">i-1</a></li>
+							<li class="active"><a th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage}" th:text="${currentPage}"></a></li>
+							<li th:if=" ${currentPage * 8} lt ${countnum}"><a th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-(-1)}" th:text="${(currentPage-(-1))}"></a></li>
+							<li th:if="${(currentPage-(-1)) * 8} lt ${countnum}" ><a  th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-(-2)}" th:text="${currentPage-(-2)}"></a></li>
+							<li><a th:if=" ${currentPage} ne ${pageNum}" th:href="'product-listing?'+itemId+'='+${itemId}+'&'+currentPage+'='+${currentPage-(-1)}">
+								<i class="fa fa-angle-right">
+								</i>
+							</a>
+							</li>
+						</div>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="ps-sidebar" data-mh="product-listing">
+			<aside class="ps-widget--sidebar ps-widget--category">
+				<div class="ps-widget__header">
+					<h3>分类</h3>
+				</div>
+				<div class="ps-widget__content">
+					<ul class="ps-list--checked" th:each="itemlist,itemlistStat: ${itemList}">
+					   <a th:if="${itemId} le '1000026'" ><a th:if="${itemId} ge '1000000'">
+					      <li  th:if="${itemlist.itemId} le '1000010' "><a th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+					   </a></a>
+					 </ul>
+					<ul class="ps-list--checked" th:each="itemlist,itemlistStat: ${itemList}">
+						<a th:if="${itemId} le '1000062'" ><a th:if="${itemId} ge '1000027'">
+						<li  th:if="${itemlist.itemId} ge '1000027'"><a  th:if="${itemlist.itemId} le '1000037' " th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+						</a></a>
+					</ul>
+
+					<ul class="ps-list--checked" th:each="itemlist,itemlistStat: ${itemList}">
+						<a th:if="${itemId} le '1000095'" ><a th:if="${itemId} ge '1000063'">
+						<li  th:if="(${itemlist.itemId} ge '1000063')"><a th:if="(${itemlist.itemId} le '1000073')" th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+						</a></a>
+					</ul>
+
+					<ul class="ps-list--checked" th:each="itemlist,itemlistStat: ${itemList}">
+						<a th:if="${itemId} le '1000116'" ><a th:if="${itemId} ge '1000096'">
+						<li  th:if="(${itemlist.itemId} ge '1000096')"><a th:if="(${itemlist.itemId} le '1000106')" th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+						</a></a>
+					</ul>
+
+					<ul class="ps-list--checked" th:each="itemlist,itemlistStat: ${itemList}">
+						<a th:if="${itemId} le '1000129'" ><a th:if="${itemId} ge '1000117'">
+						<li  th:if="(${itemlist.itemId} ge '1000117')"><a th:if="(${itemlist.itemId} le '1000127') " th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+						</a></a>
+					</ul>
+					<ul class="ps-list--checked" th:each="itemlist,itemlistStat: ${itemList}">
+						<a th:if="${itemId} le '1000144'" ><a th:if="${itemId} ge '1000130'">
+						<li  th:if="(${itemlist.itemId} ge '1000130')"><a th:if="(${itemlist.itemId} le '1000140') " th:href="'product-listing?'+itemId+'='+${itemlist.itemId}+'&'+currentPage+'=1'" th:text="${itemlist.name}">中小学教辅</a></li>
+						</a></a>
+					</ul>
+				</div>
+			</aside>
+			<!--<aside class="ps-widget&#45;&#45;sidebar ps-widget&#45;&#45;filter">-->
+				<!--<div class="ps-widget__header">-->
+					<!--<h3>Category</h3>-->
+				<!--</div>-->
+				<!--<div class="ps-widget__content">-->
+					<!--<div class="ac-slider" data-default-min="50" data-default-max="200" data-max="240" data-step="2" data-unit="$"></div>-->
+					<!--<p class="ac-slider__meta">Price:<span class="ac-slider__value ac-slider__min"></span>-<span class="ac-slider__value ac-slider__max"></span></p><a class="ac-slider__filter ps-btn" href="#" >Filter</a>-->
+				<!--</div>-->
+			<!--</aside>-->
+			<!--<aside class="ps-widget&#45;&#45;sidebar ps-widget&#45;&#45;category">-->
+				<!--<div class="ps-widget__header">-->
+					<!--<h3>Shoe Brand</h3>-->
+				<!--</div>-->
+				<!--<div class="ps-widget__content">-->
+					<!--<ul class="ps-list&#45;&#45;checked">-->
+						<!--<li class="current"><a href="product-listing?itemId=?">Nike(521)</a></li>-->
+						<!--<li><a href="product-listing?itemId=?">Adidas(76)</a></li>-->
+						<!--<li><a href="product-listing?itemId=?">Baseball(69)</a></li>-->
+						<!--<li><a href="product-listing?itemId=?">Gucci(36)</a></li>-->
+						<!--<li><a href="product-listing?itemId=?">Dior(108)</a></li>-->
+						<!--<li><a href="product-listing?itemId=?">B&G(108)</a></li>-->
+						<!--<li><a href="product-listing?itemId=?">Louis Vuiton(47)</a></li>-->
+					<!--</ul>-->
+				<!--</div>-->
+			<!--</aside>-->
+			<!--<aside class="ps-widget&#45;&#45;sidebar ps-widget&#45;&#45;category">-->
+				<!--<div class="ps-widget__header">-->
+					<!--<h3>Width</h3>-->
+				<!--</div>-->
+				<!--<div class="ps-widget__content">-->
+					<!--<ul class="ps-list&#45;&#45;checked">-->
+						<!--<li class="current"><a href="product-listing?itemId=?">Narrow</a></li>-->
+						<!--<li><a href="product-listing?itemId=?">Regular</a></li>-->
+						<!--<li><a href="product-listing?itemId=?">Wide</a></li>-->
+						<!--<li><a href="product-listing?itemId=?">Extra Wide</a></li>-->
+					<!--</ul>-->
+				<!--</div>-->
+			<!--</aside>-->
+			<!--<div class="ps-sticky desktop">-->
+				<!--<aside class="ps-widget&#45;&#45;sidebar">-->
+					<!--<div class="ps-widget__header">-->
+						<!--<h3>Size</h3>-->
+					<!--</div>-->
+					<!--<div class="ps-widget__content">-->
+						<!--<table class="table ps-table&#45;&#45;size">-->
+							<!--<tbody>-->
+							<!--<tr>-->
+								<!--<td class="active">3</td>-->
+								<!--<td>5.5</td>-->
+								<!--<td>8</td>-->
+								<!--<td>10.5</td>-->
+								<!--<td>13</td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td>3.5</td>-->
+								<!--<td>6</td>-->
+								<!--<td>8.5</td>-->
+								<!--<td>11</td>-->
+								<!--<td>13.5</td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td>4</td>-->
+								<!--<td>6.5</td>-->
+								<!--<td>9</td>-->
+								<!--<td>11.5</td>-->
+								<!--<td>14</td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td>4.5</td>-->
+								<!--<td>7</td>-->
+								<!--<td>9.5</td>-->
+								<!--<td>12</td>-->
+								<!--<td>14.5</td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td>5</td>-->
+								<!--<td>7.5</td>-->
+								<!--<td>10</td>-->
+								<!--<td>12.5</td>-->
+								<!--<td>15</td>-->
+							<!--</tr>-->
+							<!--</tbody>-->
+						<!--</table>-->
+					<!--</div>-->
+				<!--</aside>-->
+				<!--<aside class="ps-widget&#45;&#45;sidebar">-->
+					<!--<div class="ps-widget__header">-->
+						<!--<h3>Color</h3>-->
+					<!--</div>-->
+					<!--<div class="ps-widget__content">-->
+						<!--<ul class="ps-list&#45;&#45;color">-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+							<!--<li><a href="#"></a></li>-->
+						<!--</ul>-->
+					<!--</div>-->
+				<!--</aside>-->
+			<!--</div>-->
+			<!--aside.ps-widget--sidebar-->
+			<!--    .ps-widget__header: h3 Ads Banner-->
+			<!--    .ps-widget__content-->
+			<!--        a(href='product-listing'): img(src="images/offer/sidebar.jpg" alt="")-->
+			<!---->
+			<!--aside.ps-widget--sidebar-->
+			<!--    .ps-widget__header: h3 Best Seller-->
+			<!--    .ps-widget__content-->
+			<!--        - for (var i = 0; i < 3; i ++)-->
+			<!--            .ps-shoe--sidebar-->
+			<!--                .ps-shoe__thumbnail-->
+			<!--                    a(href='#')-->
+			<!--                    img(src="images/shoe/sidebar/"+(i+1)+".jpg" alt="")-->
+			<!--                .ps-shoe__content-->
+			<!--                    if i == 1-->
+			<!--                        a(href='#').ps-shoe__title Nike Flight Bonafide-->
+			<!--                    else if i == 2-->
+			<!--                        a(href='#').ps-shoe__title Nike Sock Dart QS-->
+			<!--                    else-->
+			<!--                        a(href='#').ps-shoe__title Men's Shoe-->
+			<!--                    p <del> £253.00</del> £152.00-->
+			<!--                    a(href='#').ps-btn PURCHASE-->
+		</div>
+	</div>
+	<footer th:replace="common/template_menu::footer">
+
+	</footer>
+</main>
+<!-- JS Library-->
+<script type="text/javascript" src="plugins/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="plugins/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+<script type="text/javascript" src="plugins/owl-carousel/owl.carousel.min.js"></script>
+<script type="text/javascript" src="plugins/gmap3.min.js"></script>
+<script type="text/javascript" src="plugins/imagesloaded.pkgd.js"></script>
+<script type="text/javascript" src="plugins/isotope.pkgd.min.js"></script>
+<script type="text/javascript" src="plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="plugins/jquery.matchHeight-min.js"></script>
+<script type="text/javascript" src="plugins/slick/slick/slick.min.js"></script>
+<script type="text/javascript" src="plugins/elevatezoom/jquery.elevatezoom.js"></script>
+<script type="text/javascript" src="plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script>
+<script type="text/javascript" src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ditu.google.cn/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB"></script>
+<script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.video.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+<!-- Custom scripts-->
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

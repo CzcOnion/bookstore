@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/template_head::head">
+
+</head>
+
+<body>
+
+
+<header th:replace="common/template_menu::header">
+
+</header>
+<!-- /banner section -->
+
+<div th:replace="common/template_menu::header-services">
+
+</div>
+    <section class="blog-post">
+        <!-- Page Content -->
+        <div class="container">
+
+            <!-- Page Heading/Breadcrumbs -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header text-center" ><a th:text="${bookreview.title}">Blog Post</a>
+                    <small>by <a th:text="${bookreview.user.getName()}">Vanity Fair</a>
+                    </small>
+                </h2>
+                    <ol class="breadcrumb">
+                        <li><a th:href="@{/}">主页</a>
+                        </li>
+                        <li><a th:href="@{/review-listing(currentPage=${1})}">所有书评</a></li>
+                        <li class="active">书评</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- Content Row -->
+            <div class="row">
+
+                <!-- Blog Post Content Column -->
+                <div class="col-lg-8">
+
+                    <!-- Blog Post -->
+
+                    <hr>
+
+                    <!-- Date/Time -->
+                    <p class="blogpost-w3ls" ><i class="fa fa-clock-o"></i> 发布于 <p th:text="${bookreview.date}">May 28, 2016 at 9:00 PM</p></p>
+
+                    <hr>
+
+
+
+                    <!-- Post Content -->
+                    <p class="lead" th:text="${bookreview.text}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati,
+                        aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos
+                        magni recusandae laborum minus inventore?</p>
+
+                    <hr>
+
+
+
+
+
+
+
+                </div>
+
+                <!-- Blog Sidebar Widgets Column -->
+                <div class="col-md-4 blog-post-w3layouts">
+                    <!-- Blog Categories Well -->
+                    <div class="well blog-post-agileits">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <img th:src="${image.imageLink}" width="60%" height="60%">
+                            </div>
+                            <div style="margin-top: 80px;display: block;" >
+                                <p th:text="${bookreview.book.description}" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis
+                                    adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <hr>
+
+
+        </div>
+        <!-- /.container -->
+
+    </section>
+
+
+<footer th:replace="common/template_menu::footer">
+
+</footer>
+
+<!-- JS Library-->
+<script type="text/javascript" src="plugins/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="plugins/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+<script type="text/javascript" src="plugins/owl-carousel/owl.carousel.min.js"></script>
+<script type="text/javascript" src="plugins/gmap3.min.js"></script>
+<script type="text/javascript" src="plugins/imagesloaded.pkgd.js"></script>
+<script type="text/javascript" src="plugins/isotope.pkgd.min.js"></script>
+<script type="text/javascript" src="plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="plugins/jquery.matchHeight-min.js"></script>
+<script type="text/javascript" src="plugins/slick/slick/slick.min.js"></script>
+<script type="text/javascript" src="plugins/elevatezoom/jquery.elevatezoom.js"></script>
+<script type="text/javascript" src="plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script>
+<script type="text/javascript" src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ditu.google.cn/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB"></script>
+<script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.video.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+<!-- Custom scripts-->
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

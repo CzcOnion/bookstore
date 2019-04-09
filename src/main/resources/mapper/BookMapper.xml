@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.csu.bookstore.persistence.BookMapper" >
+  <resultMap id="BaseResultMap" type="org.csu.bookstore.domain.Book" >
+    <id column="book_id" property="bookId" jdbcType="DECIMAL" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="collected_count" property="collectedCount" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="REAL" />
+    <result column="sale" property="sale" jdbcType="INTEGER" />
+    <result column="writer" property="writer" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    book_id, name, description, price, quantity, collected_count, score, sale, writer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where book_id = #{bookId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from book
+    where book_id = #{bookId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="org.csu.bookstore.domain.Book" >
+    insert into book (book_id, name, description, 
+      price, quantity, collected_count, 
+      score, sale, writer)
+    values (#{bookId,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{price,jdbcType=REAL}, #{quantity,jdbcType=INTEGER}, #{collectedCount,jdbcType=INTEGER}, 
+      #{score,jdbcType=REAL}, #{sale,jdbcType=INTEGER}, #{writer,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.csu.bookstore.domain.Book" >
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="collectedCount != null" >
+        collected_count,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="sale != null" >
+        sale,
+      </if>
+      <if test="writer != null" >
+        writer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        #{bookId,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="collectedCount != null" >
+        #{collectedCount,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="sale != null" >
+        #{sale,jdbcType=INTEGER},
+      </if>
+      <if test="writer != null" >
+        #{writer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.csu.bookstore.domain.Book" >
+    update book
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="collectedCount != null" >
+        collected_count = #{collectedCount,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="sale != null" >
+        sale = #{sale,jdbcType=INTEGER},
+      </if>
+      <if test="writer != null" >
+        writer = #{writer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where book_id = #{bookId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.csu.bookstore.domain.Book" >
+    update book
+    set name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      quantity = #{quantity,jdbcType=INTEGER},
+      collected_count = #{collectedCount,jdbcType=INTEGER},
+      score = #{score,jdbcType=REAL},
+      sale = #{sale,jdbcType=INTEGER},
+      writer = #{writer,jdbcType=VARCHAR}
+    where book_id = #{bookId,jdbcType=DECIMAL}
+  </update>
+
+  <select id="getNextId" resultType="int">
+    select
+    max(book_id)+1
+    from
+    book
+  </select>
+
+
+  <select id="selectByItemId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from book,classify
+    where item_id = #{itemId,jdbcType=DECIMAL}
+    and book.name = classify.book_name
+  </select>
+
+  <select id="selectByBookName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from book
+    where book.name = #{bookName}
+  </select>
+
+  <select id="searchBook" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from book
+    where description like "%"#{text}"%" or name like "%"#{text}"%" or writer like "%"#{text}"%"
+  </select>
+
+  <select id="getBooks" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from book
+  </select>
+
+</mapper>

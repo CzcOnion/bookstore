@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.csu.bookstore.persistence.ClassifyMapper" >
+  <resultMap id="BaseResultMap" type="org.csu.bookstore.domain.ClassifyKey" >
+    <id column="item_id" property="itemId" jdbcType="DECIMAL" />
+    <id column="book_name" property="bookName" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="org.csu.bookstore.domain.ClassifyKey" >
+    delete from classify
+    where item_id = #{itemId,jdbcType=DECIMAL}
+      and book_name = #{bookName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.csu.bookstore.domain.ClassifyKey" >
+    insert into classify (item_id, book_name)
+    values (#{itemId,jdbcType=DECIMAL}, #{bookName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.csu.bookstore.domain.ClassifyKey" >
+    insert into classify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="bookName != null" >
+        book_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=DECIMAL},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getClassifyKeyByItemId" parameterType="int" resultType="org.csu.bookstore.domain.ClassifyKey">
+    select
+    classify.item_id as itemId,
+    classify.book_name as bookName,
+    item.name as name
+    from classify,item
+    where item_id=#{itemId}
+    and item.item_id = classify.item_id
+  </select>
+
+  <select id="getClassifyKeyByBookName" parameterType="java.lang.String" resultType="org.csu.bookstore.domain.ClassifyKey">
+    select
+    classify.item_id as itemId,
+    classify.book_name as bookName,
+    item.name as name
+    from classify,item
+    where classify.book_name=#{bookName}
+    and item.item_id = classify.item_id
+  </select>
+  <select id="selectByBookName" parameterType="java.lang.String" resultType="org.csu.bookstore.domain.ClassifyKey">
+    select
+    item_id as itemId,
+    book_name as book_name
+    from
+    classify
+    where book_name = #{bookName}
+  </select>
+  <select id="selectByItemId" parameterType="java.lang.Integer" resultType="org.csu.bookstore.domain.ClassifyKey">
+    select
+    item_id as itemId,
+    book_name as bookName
+    from
+    classify
+    where item_id = #{itemId}
+  </select>
+
+
+</mapper>

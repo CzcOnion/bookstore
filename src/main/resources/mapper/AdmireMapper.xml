@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.csu.bookstore.persistence.AdmireMapper" >
+  <resultMap id="BaseResultMap" type="org.csu.bookstore.domain.Admire" >
+    <id column="admire_id" property="admireId" jdbcType="DECIMAL" />
+    <result column="user_id" property="userId" jdbcType="DECIMAL" />
+    <result column="review_id" property="reviewId" jdbcType="DECIMAL" />
+    <result column="date" property="date" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    admire_id, user_id, review_id, date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admire
+    where admire_id = #{admireId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admire
+    where admire_id = #{admireId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="org.csu.bookstore.domain.Admire" >
+    insert into admire (admire_id, user_id, review_id, 
+      date)
+    values (#{admireId,jdbcType=DECIMAL}, #{userId,jdbcType=DECIMAL}, #{reviewId,jdbcType=DECIMAL}, 
+      #{date,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="org.csu.bookstore.domain.Admire" >
+    insert into admire
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="admireId != null" >
+        admire_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="reviewId != null" >
+        review_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="admireId != null" >
+        #{admireId,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="reviewId != null" >
+        #{reviewId,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.csu.bookstore.domain.Admire" >
+    update admire
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="reviewId != null" >
+        review_id = #{reviewId,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where admire_id = #{admireId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.csu.bookstore.domain.Admire" >
+    update admire
+    set user_id = #{userId,jdbcType=DECIMAL},
+      review_id = #{reviewId,jdbcType=DECIMAL},
+      date = #{date,jdbcType=DECIMAL}
+    where admire_id = #{admireId,jdbcType=DECIMAL}
+  </update>
+
+  <select id="getNextId" resultType="int">
+    select
+    max(admire_id)+1
+    from
+    admire
+  </select>
+
+
+  <select id="getCountByReviewId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    count(admire_id)
+    from
+    admire
+    where review_id = #{review_id}
+  </select>
+</mapper>
